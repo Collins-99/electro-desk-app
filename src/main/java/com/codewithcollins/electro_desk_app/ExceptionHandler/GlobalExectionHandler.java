@@ -47,6 +47,5 @@ public class GlobalExectionHandler {
         return new ResponseEntity<>(error,HttpStatus.BAD_REQUEST);
     }
 
-
 }
 

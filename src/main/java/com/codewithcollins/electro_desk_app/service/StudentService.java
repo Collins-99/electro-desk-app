@@ -7,11 +7,12 @@ import com.codewithcollins.electro_desk_app.repository.StudentRepo;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.ArrayList;
 import java.util.List;
 
-
+@Transactional
 @Service
 public class StudentService {
     @Autowired
@@ -33,5 +34,14 @@ public class StudentService {
         Student student = new Student();
         student = StudentMapper.RegisterDtoToStudent(registerDTO);
         repo.save(student);
+    }
+
+    ///  delete a student
+    public void  deleteStudent(String id){
+        if (!repo.existsByStudentIndex(id)) {
+            throw new RuntimeException("Deletion Failed");
+        }
+
+        repo.deleteByStudentIndex(id).orElseThrow(()->new RuntimeException("Student is unavailable"));
     }
 }

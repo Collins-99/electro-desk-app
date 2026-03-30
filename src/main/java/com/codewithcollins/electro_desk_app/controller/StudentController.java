@@ -4,6 +4,7 @@ import com.codewithcollins.electro_desk_app.model.dto.RegisterDTO;
 import com.codewithcollins.electro_desk_app.service.StudentService;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpOutputMessage;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -26,8 +27,16 @@ public class StudentController {
 
     // Add a student
     @PostMapping("/add")
-public ResponseEntity<?> addStudent (@Valid @RequestBody RegisterDTO std){
+    public ResponseEntity<?> addStudent (@Valid @RequestBody RegisterDTO std){
         service.addStudent(std);
         return new ResponseEntity<>("Everyting was okay",HttpStatus.OK);
+    }
+
+    // delete a student
+    @PostMapping("/delete/{index}")
+    public ResponseEntity<?> delete(@PathVariable String index){
+        System.out.println("-->> "+index);
+        service.deleteStudent(index);
+        return new ResponseEntity<>(HttpStatus.OK);
     }
 }

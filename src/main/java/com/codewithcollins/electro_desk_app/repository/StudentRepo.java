@@ -8,5 +8,8 @@ import java.util.Optional;
 
 @Repository
 public interface StudentRepo extends JpaRepository<Student,Long> {
+    Optional<Student> deleteByStudentIndex(String studentIndex);
+
+    boolean existsByStudentIndex(String studentIndex);
 
 }
