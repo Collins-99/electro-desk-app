@@ -1,0 +1,30 @@
+
+
+services:
+
+  postgres:
+    image: postgres:15
+    container_name: electro_desk_db
+    restart: always
+    environment:
+      POSTGRES_DB: electro_desk_db
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: postgres
+    ports:
+      - "5433:5432"
+    volumes:
+      - s-data:/var/lib/postgresql/data
+
+  app:
+    build: .
+    container_name: electro-desk
+    depends_on:
+      - postgres
+    ports:
+      - "8080:8080"
+    environment:
+      SPRING_DATASOURCE_URL: jdbc:postgresql://postgres:5432/electro_desk_db
+      SPRING_DATASOURCE_USERNAME: postgres
+      SPRING_DATASOURCE_PASSWORD: postgres
+volumes:
+  s-data:
